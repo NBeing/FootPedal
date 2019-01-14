@@ -6,19 +6,17 @@ from rx              import Observable, Observer
 from pykeyboard      import PyKeyboard
 from i3CurrentWindow import i3CurrentWindow
 from serialToKey     import _keyPresses
-from keyConfigs      import keyConfigs
+from keyConfigs      import do_nothing
 
 pk = PyKeyboard()
 
 def mapToKey( keyMap, keyList ):
     return keyList[keyMap]
 
-# This is gross! *Continue Refactor*
 def mapToPress(mapped):
-    newBinding = mapped['window']
-    pressed = mapToKey(mapped['keys'], newBinding)
+    pressed = mapToKey(mapped['keys'], mapped['window'])
 
-    for keySet in newBinding:
+    for keySet in mapped['window']:
         if keySet['bn'] != ['']:
             if keySet['bn'] == pressed['bn']:
                 for key in keySet['bn']:
@@ -26,7 +24,11 @@ def mapToPress(mapped):
                     pk.press_key(key)
             else:
                 for key in keySet['bn']:
-                    pk.release_key(key)
+                    for x in pressed['bn']:
+                        if key == x:
+                            do_nothing()
+                        else:
+                            pk.release_key(key)
 
     return mapped
 
