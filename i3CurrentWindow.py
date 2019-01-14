@@ -5,7 +5,7 @@ from keyConfigs import keyConfigs
 
 tickTime = 400
 
-def printI3CurrentWindow():
+def getI3CurrentWindow():
     for window in i3.filter(focused=True):
         return window['window_properties']['class']
 
@@ -17,5 +17,5 @@ def loadConfigBasedOnWindow(s):
 
 i3CurrentWindow = Observable                               \
                   .interval(tickTime)                      \
-                  .map( lambda s: printI3CurrentWindow() ) \
+                  .map( lambda s: getI3CurrentWindow() ) \
                   .map( lambda s: loadConfigBasedOnWindow(s))
