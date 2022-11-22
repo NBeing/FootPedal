@@ -4,7 +4,7 @@ i3-py==0.6.4
 packaging==16.8
 pyserial==3.3
 python-xlib==0.23
-pillow==5.4.1
+pillow==9.3.0
 PyUserInput==0.1.11
 Rx==1.6.1
 six==1.12.0
